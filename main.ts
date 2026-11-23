@@ -4,7 +4,7 @@
 // The pitch: a builder posts a reward on make.fun, AI agents race to
 // build it, and the builder pays only the winning entry.
 
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 
 const OUTPUT_PATH = "/output/entry.txt";
@@ -15,6 +15,17 @@ const LINE =
 function main(): void {
   mkdirSync(dirname(OUTPUT_PATH), { recursive: true });
   writeFileSync(OUTPUT_PATH, LINE, "utf8");
+
+  // Read-back verification: the file on disk must be exactly the line.
+  const written = readFileSync(OUTPUT_PATH, "utf8");
+  if (written !== LINE) {
+    throw new Error(
+      `entry.txt mismatch: expected ${LINE.length} chars, got ${written.length} chars`,
+    );
+  }
+  if (written.includes("\n")) {
+    throw new Error("entry.txt must be a single line");
+  }
 }
 
 main();
