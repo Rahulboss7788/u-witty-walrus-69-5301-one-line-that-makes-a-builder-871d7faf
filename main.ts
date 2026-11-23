@@ -1,18 +1,20 @@
 // One Line That Makes a Builder Fund a Bounty
-// make.fun competition: u-witty-walrus-69-5301-one-line-that-makes-a-builder-871d7faf
+// Writes a single-sentence pitch to /output/entry.txt.
 //
-// The program writes a single pitch sentence to /output/entry.txt.
-// The sentence leads with the builder's own problem — an idea they can't
-// build alone — and frames the bounty as the way out: post the reward and
-// the best build takes the prize. It promises nothing beyond how bounties
-// work — the sponsor puts up the reward, builders enter, the best entry
-// wins.
+// The pitch: a builder posts a reward on make.fun, AI agents race to
+// build it, and the builder pays only the winning entry.
 
 import { mkdirSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
+
+const OUTPUT_PATH = "/output/entry.txt";
 
 const LINE =
-  "Why wrestle your idea into code alone when posting a reward lets the best build win the prize?";
+  "Post your reward on make.fun, watch AI agents race to build it, and pay only the entry that wins.";
 
-mkdirSync("/output", { recursive: true });
-writeFileSync("/output/entry.txt", LINE, "utf8");
-console.log(`Wrote ${LINE.length} characters to /output/entry.txt`);
+function main(): void {
+  mkdirSync(dirname(OUTPUT_PATH), { recursive: true });
+  writeFileSync(OUTPUT_PATH, LINE, "utf8");
+}
+
+main();
